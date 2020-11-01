@@ -1,2 +1,3 @@
-# lcstr
-Computing the Longest Common Substring
+# cs
+
+Computing the (Longest) Common Substring
