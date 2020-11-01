@@ -1,7 +1,7 @@
 //! # Example
 //!
 //! ```
-//! use cs::longest_common_substring
+//! use cs::longest_common_substring;
 //! let lcs = longest_common_substring(&[
 //!     "ZYABCAGB",
 //!     "BCAGDTZYY",
@@ -28,12 +28,12 @@ use suffix::SuffixTable;
 /// ]);
 /// assert_eq!(lcs, "CAG");
 /// ```
-pub fn longest_common_substring<'a>(strs: &[&'a str]) -> &'a str {
+pub fn longest_common_substring<T: AsRef<str>>(strs: &[T]) -> &str {
     let number_of_strings = strs.len();
     let mut boundaries = Vec::new();
     let mut concatenated = String::new();
     for s in strs.iter() {
-        concatenated.push_str(*s);
+        concatenated.push_str(s.as_ref());
         boundaries.push(concatenated.len());
     }
     let sa = SuffixTable::new(&concatenated);
@@ -78,16 +78,16 @@ pub fn longest_common_substring<'a>(strs: &[&'a str]) -> &'a str {
     let lcs_len = lcs_len as usize;
     let lcs_pos = lcs_pos as usize;
 
-    std::str::from_utf8(&strs[0].as_bytes()[lcs_pos..lcs_pos + lcs_len]).unwrap()
+    std::str::from_utf8(&strs[0].as_ref().as_bytes()[lcs_pos..lcs_pos + lcs_len]).unwrap()
 }
 
 /// compute a vector of common substring among a slice of input substrings. The output is sorted lexicographically.
-pub fn common_substrings<'a>(strs: &[&'a str]) -> Vec<&'a str> {
+pub fn common_substrings<T: AsRef<str>>(strs: &[T]) -> Vec<&str> {
     let number_of_strings = strs.len();
     let mut boundaries = Vec::new();
     let mut concatenated = String::new();
     for s in strs.iter() {
-        concatenated.push_str(*s);
+        concatenated.push_str(s.as_ref());
         boundaries.push(concatenated.len());
     }
     let sa = SuffixTable::new(&concatenated);
@@ -117,9 +117,10 @@ pub fn common_substrings<'a>(strs: &[&'a str]) -> Vec<&'a str> {
         let m = win_l.iter().skip(1).min().unwrap(); // win_l always has length 3
         let this_cs_len = *m as usize;
         let this_cs_pos = win_p[0] as usize;
-        let this_cs =
-            std::str::from_utf8(&strs[0].as_bytes()[this_cs_pos..this_cs_pos + this_cs_len])
-                .unwrap();
+        let this_cs = std::str::from_utf8(
+            &strs[0].as_ref().as_bytes()[this_cs_pos..this_cs_pos + this_cs_len],
+        )
+        .unwrap();
         css.push(this_cs);
     }
 
