@@ -28,7 +28,7 @@ use suffix::SuffixTable;
 /// ]);
 /// assert_eq!(lcs, "CAG");
 /// ```
-pub fn longest_common_substring<T: AsRef<str>>(strs: &[T]) -> &str {
+pub fn longest_common_substring<T: AsRef<str>>(strs: &[T]) -> String {
     let number_of_strings = strs.len();
     let mut boundaries = Vec::new();
     let mut concatenated = String::new();
@@ -78,11 +78,13 @@ pub fn longest_common_substring<T: AsRef<str>>(strs: &[T]) -> &str {
     let lcs_len = lcs_len as usize;
     let lcs_pos = lcs_pos as usize;
 
-    std::str::from_utf8(&strs[0].as_ref().as_bytes()[lcs_pos..lcs_pos + lcs_len]).unwrap()
+    std::str::from_utf8(&concatenated.as_bytes()[lcs_pos..lcs_pos + lcs_len])
+        .unwrap()
+        .to_owned()
 }
 
 /// compute a vector of common substring among a slice of input substrings. The output is sorted lexicographically.
-pub fn common_substrings<T: AsRef<str>>(strs: &[T]) -> Vec<&str> {
+pub fn common_substrings<T: AsRef<str>>(strs: &[T]) -> Vec<String> {
     let number_of_strings = strs.len();
     let mut boundaries = Vec::new();
     let mut concatenated = String::new();
@@ -117,10 +119,10 @@ pub fn common_substrings<T: AsRef<str>>(strs: &[T]) -> Vec<&str> {
         let m = win_l.iter().skip(1).min().unwrap(); // win_l always has length 3
         let this_cs_len = *m as usize;
         let this_cs_pos = win_p[0] as usize;
-        let this_cs = std::str::from_utf8(
-            &strs[0].as_ref().as_bytes()[this_cs_pos..this_cs_pos + this_cs_len],
-        )
-        .unwrap();
+        let this_cs =
+            std::str::from_utf8(&concatenated.as_bytes()[this_cs_pos..this_cs_pos + this_cs_len])
+                .unwrap()
+                .to_owned();
         css.push(this_cs);
     }
 
