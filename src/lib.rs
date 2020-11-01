@@ -1,10 +1,24 @@
-extern crate suffix;
+//! # Example
+//!
+//! ```
+//! use cs::longest_common_substring
+//! let lcs = longest_common_substring(&[
+//!     "ZYABCAGB",
+//!     "BCAGDTZYY",
+//!     "DACAGZZYSC",
+//!     "CAGYZYSAU",
+//!     "CAZYUCAGF",
+//! ]);
+//! assert_eq!(lcs, "CAG");
+//! ```
+
 use suffix::SuffixTable;
 /// Compute the longest common substring among a slice of strings
 ///
 /// # Example
 ///
 /// ```
+/// use cs::longest_common_substring;
 /// let lcs = longest_common_substring(&[
 ///     "ZYABCAGB",
 ///     "BCAGDTZYY",
